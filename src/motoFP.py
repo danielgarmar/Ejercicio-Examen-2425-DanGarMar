@@ -88,3 +88,36 @@ def escuderias_con_solo_un_piloto(carreras: list[CarreraFP]) -> list[str]:
     resultado = [escuderia for escuderia, pilotos in escuderia_pilotos.items() if len(pilotos) == 1]
 
     return resultado
+
+def piloto_racha_mas_larga_victorias_consecutivas(carreras: list[CarreraFP], año: int|None = None) -> tuple[str, int]:
+    rachas = {}
+
+    for carrera in carreras:
+        if año is not None and carrera.fecha_hora.year != año:
+            continue
+        elif año is None:
+            continue
+
+        ganador = carrera.podio[0].nombre
+        ganador_anterior = None
+        contador = 0
+        if ganador not in rachas:
+            rachas[ganador] = 1
+            contador += 1
+            ganador_anterior = ganador
+        else:
+            if ganador == ganador_anterior:
+                contador += 1
+            else:
+                if contador > rachas.get(ganador_anterior, 0) or rachas.get(ganador_anterior) == 1:
+                    rachas[ganador_anterior] = contador
+                else:
+                    continue
+            contador = 0
+            ganador_anterior = ganador
+
+    if not rachas:
+        return "", 0
+
+    piloto = max(rachas, key=rachas.get)
+    return piloto, rachas[piloto]

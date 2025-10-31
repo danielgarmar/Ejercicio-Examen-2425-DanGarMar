@@ -28,9 +28,17 @@ def test_escuderias_con_solo_un_piloto(carreras):
     for escuderia in resultado:
         print(escuderia)
 
+def test_piloto_racha_mas_larga_victorias_consecutivas(carreras, año=None):
+    resultado = piloto_racha_mas_larga_victorias_consecutivas(carreras, año)
+    if año:
+        print(f"El piloto con la racha más larga de victorias consecutivasen {año} es: {resultado[0]} con una racha de {resultado[1]} victorias.")
+    else:
+        print(f"El piloto con la racha más larga de victorias consecutivas es: {resultado[0]} con una racha de {resultado[1]} victorias.")
+
 if __name__ == "__main__":
     carreras = lee_carreras_test("data/mundial_motofp.csv")
     #test_maximo_dias_sin_ganar(carreras, "Francesco Bagnaia")
     #test_maximo_dias_sin_ganar(carreras, "Fabio Quartararo")
     #test_piloto_mas_podios_por_circuito(carreras)
-    test_escuderias_con_solo_un_piloto(carreras)
+    #test_escuderias_con_solo_un_piloto(carreras)
+    test_piloto_racha_mas_larga_victorias_consecutivas(carreras)
